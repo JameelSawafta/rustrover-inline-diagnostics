@@ -9,7 +9,7 @@
         Shows RustRover diagnostics permanently underneath Rust source code.
     ]]></description>
 
-    <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.rust</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="dev.rustdiagnostics.DiagnosticsStartupActivity"/>
