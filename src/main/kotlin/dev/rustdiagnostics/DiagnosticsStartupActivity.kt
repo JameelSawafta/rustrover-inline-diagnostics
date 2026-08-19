@@ -14,7 +14,9 @@ class DiagnosticsStartupActivity :
         project: Project
     ) {
         val manager =
-            DiagnosticInlayManager(project)
+            DiagnosticInlayManager(
+                project
+            )
 
         subscribeToDaemon(
             project,
@@ -45,11 +47,15 @@ class DiagnosticsStartupActivity :
                 arrayOf(listenerClass)
             ) { proxy, method, args ->
 
-                when (method.name) {
+                when (
+                    method.name
+                ) {
                     "daemonFinished" -> {
+
                         ApplicationManager
                             .getApplication()
                             .invokeLater {
+
                                 if (
                                     !project.isDisposed
                                 ) {
@@ -67,11 +73,14 @@ class DiagnosticsStartupActivity :
                         "RustInlineDiagnosticsDaemonListener"
 
                     "hashCode" ->
-                        System.identityHashCode(proxy)
+                        System.identityHashCode(
+                            proxy
+                        )
 
                     "equals" ->
                         proxy ===
-                                args?.firstOrNull()
+                                args
+                                    ?.firstOrNull()
 
                     else ->
                         null
@@ -82,7 +91,8 @@ class DiagnosticsStartupActivity :
             .messageBus
             .connect(project)
             .subscribe(
-                DaemonCodeAnalyzer.DAEMON_EVENT_TOPIC,
+                DaemonCodeAnalyzer
+                    .DAEMON_EVENT_TOPIC,
                 listener
             )
     }

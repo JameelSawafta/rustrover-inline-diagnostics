@@ -13,13 +13,23 @@ class DiagnosticInlayManager(
 ) {
 
     private val log =
-        Logger.getInstance(DiagnosticInlayManager::class.java)
+        Logger.getInstance(
+            DiagnosticInlayManager::class.java
+        )
 
     private val inlays =
-        WeakHashMap<Editor, MutableList<Inlay<*>>>()
+        WeakHashMap<
+                Editor,
+                MutableList<Inlay<*>>
+                >()
 
-    fun refresh(editor: Editor) {
-        if (project.isDisposed || editor.isDisposed) {
+    fun refresh(
+        editor: Editor
+    ) {
+        if (
+            project.isDisposed ||
+            editor.isDisposed
+        ) {
             return
         }
 
@@ -28,7 +38,8 @@ class DiagnosticInlayManager(
             return
         }
 
-        if (!ApplicationManager
+        if (
+            !ApplicationManager
                 .getApplication()
                 .isDispatchThread
         ) {
@@ -54,6 +65,7 @@ class DiagnosticInlayManager(
                     "Failed to collect Rust diagnostics",
                     e
                 )
+
                 return
             }
 
@@ -61,36 +73,93 @@ class DiagnosticInlayManager(
             return
         }
 
-        val document = editor.document
+        val document =
+            editor.document
+
+        val displayItems =
+            mutableListOf<DisplayDiagnostic>()
+
+        for (diagnostic in diagnostics) {
+
+            displayItems +=
+                DisplayDiagnostic(
+                    startOffset =
+                        diagnostic.startOffset,
+                    endOffset =
+                        diagnostic.endOffset,
+                    message =
+                        diagnostic.message,
+                    severity =
+                        diagnostic.severity,
+                    type =
+                        DiagnosticType.PRIMARY
+                )
+
+            for (
+            related in diagnostic.related
+            ) {
+                displayItems +=
+                    DisplayDiagnostic(
+                        startOffset =
+                            related.startOffset,
+                        endOffset =
+                            related.endOffset,
+                        message =
+                            related.message,
+                        severity =
+                            HighlightSeverity.INFORMATION,
+                        type =
+                            DiagnosticType.RELATED
+                    )
+            }
+        }
 
         val grouped =
-            diagnostics.groupBy {
+            displayItems.groupBy {
                 val offset =
                     it.startOffset.coerceIn(
                         0,
                         document.textLength
                     )
 
-                document.getLineNumber(offset)
+                document.getLineNumber(
+                    offset
+                )
             }
 
         val created =
             mutableListOf<Inlay<*>>()
 
-        for ((_, diagnosticsOnLine) in grouped) {
+        for (
+        (_, diagnosticsOnLine) in grouped
+        ) {
             val ordered =
                 diagnosticsOnLine
-                    .sortedByDescending {
-                        severityPriority(it)
+                    .distinctBy {
+                        Triple(
+                            it.startOffset,
+                            it.endOffset,
+                            it.message
+                        )
                     }
-                    .take(4)
-
-            for (diagnostic in ordered) {
-                val diagnosticOffset =
-                    diagnostic.startOffset.coerceIn(
-                        0,
-                        document.textLength
+                    .sortedWith(
+                        compareByDescending<DisplayDiagnostic> {
+                            diagnosticPriority(it)
+                        }.thenBy {
+                            it.startOffset
+                        }
                     )
+                    .take(6)
+
+            for (
+            diagnostic in ordered
+            ) {
+                val diagnosticOffset =
+                    diagnostic.startOffset
+                        .coerceIn(
+                            0,
+                            document.textLength
+                        )
 
                 val line =
                     document.getLineNumber(
@@ -98,22 +167,25 @@ class DiagnosticInlayManager(
                     )
 
                 val offset =
-                    document.getLineEndOffset(line)
+                    document.getLineEndOffset(
+                        line
+                    )
 
                 val renderer =
                     DiagnosticRenderer(
-                        editor,
-                        diagnostic
+                        editor = editor,
+                        diagnostic = diagnostic
                     )
 
                 val inlay =
-                    editor.inlayModel.addBlockElement(
-                        offset,
-                        true,
-                        false,
-                        0,
-                        renderer
-                    )
+                    editor.inlayModel
+                        .addBlockElement(
+                            offset,
+                            true,
+                            false,
+                            0,
+                            renderer
+                        )
 
                 if (inlay != null) {
                     created += inlay
@@ -126,19 +198,39 @@ class DiagnosticInlayManager(
         }
     }
 
-    private fun severityPriority(
-        diagnostic: Diagnostic
+    private fun diagnosticPriority(
+        diagnostic: DisplayDiagnostic
     ): Int {
-        return when (diagnostic.severity) {
-            HighlightSeverity.ERROR -> 400
-            HighlightSeverity.WARNING -> 300
-            HighlightSeverity.WEAK_WARNING -> 200
-            HighlightSeverity.INFORMATION -> 100
-            else -> 0
+        if (
+            diagnostic.type ==
+            DiagnosticType.RELATED
+        ) {
+            return 50
+        }
+
+        return when (
+            diagnostic.severity
+        ) {
+            HighlightSeverity.ERROR ->
+                400
+
+            HighlightSeverity.WARNING ->
+                300
+
+            HighlightSeverity.WEAK_WARNING ->
+                200
+
+            HighlightSeverity.INFORMATION ->
+                100
+
+            else ->
+                0
         }
     }
 
-    fun clear(editor: Editor) {
+    fun clear(
+        editor: Editor
+    ) {
         val existing =
             inlays.remove(editor)
                 ?: return
@@ -166,4 +258,17 @@ class DiagnosticInlayManager(
                 ignoreCase = true
             ) == true
     }
+}
+
+data class DisplayDiagnostic(
+    val startOffset: Int,
+    val endOffset: Int,
+    val message: String,
+    val severity: HighlightSeverity,
+    val type: DiagnosticType
+)
+
+enum class DiagnosticType {
+    PRIMARY,
+    RELATED
 }
