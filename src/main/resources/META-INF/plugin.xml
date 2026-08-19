@@ -1,0 +1,17 @@
+﻿<idea-plugin>
+    <id>dev.rustdiagnostics.inline</id>
+
+    <name>Rust Inline Diagnostics</name>
+
+    <vendor>Jameel Sawafta</vendor>
+
+    <description><![CDATA[
+        Shows RustRover diagnostics permanently underneath Rust source code.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="dev.rustdiagnostics.DiagnosticsStartupActivity"/>
+    </extensions>
+</idea-plugin>
