@@ -329,9 +329,11 @@ https://github.com/JameelSawafta/rustrover-inline-diagnostics
 
 ## License
 
+Copyright © 2026 Jameel Sawafta
+
 Licensed under the **Apache License 2.0**.
 
-See the `LICENSE` file for details.
+See the [LICENSE](LICENSE) file for details.
 
 ## Author
 
