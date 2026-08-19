@@ -151,7 +151,7 @@ The plugin is developed primarily for **JetBrains RustRover**.
 Current plugin version:
 
 ```text
-0.1.2
+0.2.0
 ```
 
 Minimum declared IntelliJ Platform build:
