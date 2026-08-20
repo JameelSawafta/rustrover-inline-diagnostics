@@ -59,8 +59,7 @@ intellijPlatform {
 
         description = """
             <p>
-                Rust Inline Diagnostics displays Rust errors and warnings directly underneath
-                the affected source code in RustRover.
+                Rust Inline Diagnostics displays Rust errors and warnings directly underneath the affected source code in compatible JetBrains IDEs
             </p>
         
             <p>
@@ -75,9 +74,9 @@ intellijPlatform {
                 <li>Error and warning severity indicators</li>
                 <li>Theme-aware diagnostic colors</li>
                 <li>Diagnostics positioned near the affected source code</li>
-                <li>Automatically refreshes when RustRover code analysis completes</li>
+                <li>Automatically refreshes when Rust code analysis completes</li>
                 <li>Supports multiple diagnostics on the same source line</li>
-                <li>Uses RustRover's existing code analysis</li>
+                <li>Uses Rust's existing code analysis</li>
                 <li>No additional configuration required</li>
             </ul>
         
@@ -90,41 +89,41 @@ intellijPlatform {
             <h3>Preview</h3>
 
             <p>
-                <img src="https://raw.githubusercontent.com/JameelSawafta/rustrover-inline-diagnostics/master/screenshots/Screenshot1.png"
+                <img src="https://raw.githubusercontent.com/JameelSawafta/rust-inline-diagnostics/master/screenshots/Screenshot1.png"
                      alt="Rust Inline Diagnostics Preview" />
             </p>
         
             <p>
-                <img src="https://raw.githubusercontent.com/JameelSawafta/rustrover-inline-diagnostics/master/screenshots/Screenshot2.png"
+                <img src="https://raw.githubusercontent.com/JameelSawafta/rust-inline-diagnostics/master/screenshots/Screenshot2.png"
                      alt="Rust Inline Diagnostics Preview" />
             </p>
         
             <p>
-                <img src="https://raw.githubusercontent.com/JameelSawafta/rustrover-inline-diagnostics/master/screenshots/Screenshot3.png"
+                <img src="https://raw.githubusercontent.com/JameelSawafta/rust-inline-diagnostics/master/screenshots/Screenshot3.png"
                      alt="Rust Inline Diagnostics Preview" />
             </p>
         
             <p>
-                <img src="https://raw.githubusercontent.com/JameelSawafta/rustrover-inline-diagnostics/master/screenshots/Screenshot4.png"
+                <img src="https://raw.githubusercontent.com/JameelSawafta/rust-inline-diagnostics/master/screenshots/Screenshot4.png"
                      alt="Rust Inline Diagnostics Preview" />
             </p>
         
             <p>
-                <img src="https://raw.githubusercontent.com/JameelSawafta/rustrover-inline-diagnostics/master/screenshots/Screenshot5.png"
+                <img src="https://raw.githubusercontent.com/JameelSawafta/rust-inline-diagnostics/master/screenshots/Screenshot5.png"
                      alt="Rust Inline Diagnostics Preview" />
             </p>
         
             <p>
-                The plugin is designed specifically for JetBrains RustRover.
+                The plugin is designed specifically for JetBrains IDE with Rust support, such as RustRover, IntelliJ IDEA Ultimate, CLion, or PyCharm Pro.
             </p>
         """.trimIndent()
 
         changeNotes = """
             <h3>Version 0.2.0</h3>
             <ul>
-                <li>Improved RustRover compatibility.</li>
+                <li>Improved JetBrains IDE compatibility.</li>
                 <li>Improved inline diagnostic rendering.</li>
-                <li>Added support for newer RustRover releases.</li>
+                <li>Added support for newer JetBrains IDE releases.</li>
                 <li>Updated build configuration for Java 21 bytecode compatibility.</li>
             </ul>
         """.trimIndent()
