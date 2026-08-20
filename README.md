@@ -209,8 +209,8 @@ Gradle does not need to be installed globally because the repository includes th
 Clone the repository:
 
 ```bash
-git clone https://github.com/JameelSawafta/rustrover-inline-diagnostics.git
-cd rustrover-inline-diagnostics
+git clone https://github.com/JameelSawafta/rust-inline-diagnostics.git
+cd rust-inline-diagnostics
 ```
 
 ### Windows
