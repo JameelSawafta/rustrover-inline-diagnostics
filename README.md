@@ -4,7 +4,7 @@ Rust Inline Diagnostics is a plugin for **JetBrains RustRover** that displays Ru
 
 Instead of hovering over highlighted code to inspect a diagnostic, the message stays visible inside the editor while you work.
 
-"JetBrains Marketplace" (https://plugins.jetbrains.com/plugin/33671-rust-inline-diagnostics)
+[JetBrains Marketplace](https://plugins.jetbrains.com/plugin/33671-rust-inline-diagnostics)
 
 ## Features
 
@@ -343,4 +343,4 @@ See the [LICENSE](LICENSE) file for details.
 
 ---
 
-If Rust Inline Diagnostics improves your RustRover workflow, consider "leaving a review on JetBrains Marketplace" (https://plugins.jetbrains.com/plugin/33671-rust-inline-diagnostics/reviews) or starring the project on GitHub.
+If Rust Inline Diagnostics improves your RustRover workflow, consider [leaving a review on JetBrains Marketplace](https://plugins.jetbrains.com/plugin/33671-rust-inline-diagnostics/reviews) or starring the project on GitHub.
